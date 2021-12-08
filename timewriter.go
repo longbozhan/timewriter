@@ -24,9 +24,10 @@ const (
 )
 
 type TimeWriter struct {
-	Dir        string
-	Compress   bool
-	ReserveDay int
+	Dir           string
+	Compress      bool
+	ReserveDay    int
+	LogFilePrefix string
 
 	curFilename string
 	file        *os.File
@@ -269,7 +270,10 @@ func (l *TimeWriter) openExistingOrNew(writeLen int) error {
 func (l *TimeWriter) filename() string {
 	year, month, day := time.Now().Date()
 	date := fmt.Sprintf("%04d%02d%02d", year, month, day)
-	name := fmt.Sprintf("%s.%s.log", filepath.Base(os.Args[0]), date)
+	if l.LogFilePrefix == "" {
+		l.LogFilePrefix = os.Args[0]
+	}
+	name := fmt.Sprintf("%s.%s.log", filepath.Base(l.LogFilePrefix), date)
 	if l.Dir != "" {
 		return filepath.Join(l.Dir, name)
 	}

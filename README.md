@@ -5,7 +5,7 @@ TimeWriter implements io.Writer to roll daily and comporess log file time
 ## Overview
 
 * implements io.Writer. You can easily use in golang log, GORM, grpclog etc.
-* daily roll log, the file name's prefix is process name
+* daily roll log, you can specific the log file name's prefix, default is process name
 * compress to gz for old file
 
 ## Getting Started
